@@ -43,6 +43,10 @@ module God
           God.port = @options[:port]
         end
         
+        if @options[:ip]
+          God.ip = @options[:ip]
+        end
+        
         if @options[:events]
           God::EventHandler.load
         end

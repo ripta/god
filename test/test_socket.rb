@@ -14,10 +14,17 @@ class TestSocket < Test::Unit::TestCase
     end
   end
 
-  def test_should_use_supplied_port_and_host
+  def test_should_use_supplied_port
     DRb.expects(:start_service).with { |uri, object| uri == "drbunix:///tmp/god.9999.sock" && object.is_a?(God::Socket) }
     no_stdout do
       server = God::Socket.new(9999)
+    end
+  end
+  
+  def test_should_use_supplied_port_and_host
+    DRb.expects(:start_service).with { |uri, object| uri == "druby://0.0.0.0:9999" && object.is_a?(God::Socket) }
+    no_stdout do
+      server = God::Socket.new(9999, "0.0.0.0")
     end
   end
 

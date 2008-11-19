@@ -148,7 +148,7 @@ class Module
 end
 
 module God
-  VERSION = '0.7.11'
+  VERSION = '0.7.11.001'
   
   LOG_BUFFER_SIZE_DEFAULT = 100
   PID_FILE_DIRECTORY_DEFAULTS = ['/var/run/god', '~/.god/pids']
@@ -161,6 +161,7 @@ module God
     safe_attr_accessor :pid,
                        :host,
                        :port,
+                       :ip,
                        :allow,
                        :log_buffer_size,
                        :pid_file_directory,
@@ -185,6 +186,7 @@ module God
   self.pid = nil
   self.host = nil
   self.port = nil
+  self.ip = nil
   self.allow = nil
   self.log_buffer_size = nil
   self.pid_file_directory = nil
@@ -604,7 +606,7 @@ module God
     self.internal_init
     
     # instantiate server
-    self.server = Socket.new(self.port)
+    self.server = Socket.new(self.port, self.ip)
     
     # start monitoring any watches set to autostart
     self.watches.values.each { |w| w.monitor if w.autostart? }

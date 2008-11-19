@@ -15,7 +15,7 @@ begin
     opts.banner = <<-EOF
   Usage:
     Starting:
-      god [-c <config file>] [-p <port> | -b] [-P <file>] [-l <file>] [-D]
+      god [-c <config file>] [-p <port> | -b] [-i <IP>] [-P <file>] [-l <file>] [-D]
       
     Querying:
       god <command> <argument> [-p <port>]
@@ -43,6 +43,10 @@ begin
   
     opts.on("-cCONFIG", "--config-file CONFIG", "Configuration file") do |x|
       options[:config] = x
+    end
+    
+    opts.on("-iIP", "--ip IP", "TCP IP address to listen to (default uses unix socket), use 0.0.0.0 to bind to all") do |x|
+      options[:ip] = x
     end
     
     opts.on("-pPORT", "--port PORT", "Communications port (default 17165)") do |x|
