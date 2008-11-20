@@ -7,8 +7,11 @@ module God
     # kind (which is given as an underscored symbol).
     #   +kind+ is the underscored symbol representing the class (e.g. :foo_bar for God::Conditions::FooBar)
     def self.generate(kind, watch)
-      sym = kind.to_s.capitalize.gsub(/_(.)/){$1.upcase}.intern
-      c = God::Conditions.const_get(sym).new
+      syms = kind.to_s.split('/').collect { |c| c.capitalize.gsub(/_(.)/){$1.upcase}.intern }
+      klass = syms.inject(God::Conditions) do |k, sym|
+        k.const_get(sym)
+      end
+      c = klass.new
       
       unless c.kind_of?(PollCondition) || c.kind_of?(EventCondition) || c.kind_of?(TriggerCondition)
         abort "Condition '#{c.class.name}' must subclass God::PollCondition, God::EventCondition, or God::TriggerCondition" 
@@ -21,7 +24,7 @@ module God
       c.watch = watch
       c
     rescue NameError
-      raise NoSuchConditionError.new("No Condition found with the class name God::Conditions::#{sym}")
+      raise NoSuchConditionError.new("No Condition found with the class name God::Conditions::#{syms.join('::')}")
     end
     
     def self.valid?(condition)
