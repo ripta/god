@@ -1,7 +1,7 @@
 require 'rubygems'
 require 'hoe'
 
-Hoe.new('god', '0.7.11.002') do |p|
+Hoe.new('god', '0.7.11.003') do |p|
   p.rubyforge_name = 'god'
   p.author = 'Tom Preston-Werner'
   p.email = 'tom@rubyisawesome.com'

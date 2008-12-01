@@ -50,7 +50,7 @@ require 'god/conditions/http_response_code'
 require 'god/conditions/disk_usage'
 require 'god/conditions/complex'
 require 'god/conditions/file_mtime'
-require 'god/conditions/rdbms'
+require 'god/conditions/mysql'
 
 require 'god/contact'
 require 'god/contacts/email'
@@ -149,7 +149,7 @@ class Module
 end
 
 module God
-  VERSION = '0.7.11.002'
+  VERSION = '0.7.11.003'
   
   LOG_BUFFER_SIZE_DEFAULT = 100
   PID_FILE_DIRECTORY_DEFAULTS = ['/var/run/god', '~/.god/pids']
